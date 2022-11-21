@@ -31,10 +31,16 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
+import com.qualcomm.robotcore.util.Range;
+//Computer vision imports
+import java.util.List;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-import java.util.List;
+import org.firstinspires.ftc.teamcode.Hardware.Flywheel;
 
 @TeleOp(name = "Gluons TeleOp 2", group = "TeleOp")
 
@@ -64,45 +70,45 @@ public class GluonsTeleOp2 extends LinearOpMode {
         boolean dropped = false;
         boolean clawPressed=false;
 
-        String liftState="MANUAL";
-
-//        robot.robotMotors.turnOffEncoders();
-
-        //Activates TFOD upon initialization
-        // if (robot.tfod != null) {
-        robot.tfod.activate();
-        robot.tfod.setZoom(2, 16.0/9.0);
-        // }
+//        String liftState="MANUAL";
+//
+////        robot.robotMotors.turnOffEncoders();
+//
+//        //Activates TFOD upon initialization
+//        // if (robot.tfod != null) {
+//        robot.tfod.activate();
+//        robot.tfod.setZoom(2, 16.0/9.0);
+//        // }
 
         waitForStart();
 
         while (opModeIsActive()) {
 
 
-            robot.imu.loop();
+//            robot.imu.loop();
 
             // DRIVE ====================================================
             //
             double maxPower = 1;
             double maxCarousel=0.6;
-//            double forward = (Math.abs(gamepad1.left_stick_y) > 0.2 ? -gamepad1.left_stick_y : 0);
-//            double clockwise = Math.abs(gamepad1.right_stick_x) > 0.2 ? -gamepad1.right_stick_x : 0;
-//            double right = Math.abs(gamepad1.left_stick_x) > 0.2 ? gamepad1.left_stick_x : 0;
-////            double carousel=gamepad2.left_stick_y;
-////            carousel = Range.scale(carousel, -1, 1, -maxCarousel, maxCarousel);
-//            //Math for drive relative to theta
-//            clockwise *= 1;
-//
-//            double fr = forward + clockwise - right;  //+
-//            double br = forward + clockwise + right;  //-
-//            double fl = forward - clockwise + right;  //-
-//            double bl = forward - clockwise - right;  //+
-//
-//            fl = Range.scale(fl, -1, 1, -maxPower, maxPower);
-//            fr = Range.scale(fr, -1, 1, -maxPower, maxPower);
-//            bl = Range.scale(bl, -1, 1, -maxPower, maxPower);
-//            br = Range.scale(br, -1, 1, -maxPower, maxPower);
-//            robot.robotMotors.setMotorPower(fl, fr, bl, br);
+            double forward = (Math.abs(gamepad1.left_stick_y) > 0.2 ? -gamepad1.left_stick_y : 0);
+            double clockwise = Math.abs(gamepad1.right_stick_x) > 0.2 ? -gamepad1.right_stick_x : 0;
+            double right = Math.abs(gamepad1.left_stick_x) > 0.2 ? gamepad1.left_stick_x : 0;
+//            double carousel=gamepad2.left_stick_y;
+//            carousel = Range.scale(carousel, -1, 1, -maxCarousel, maxCarousel);
+            //Math for drive relative to theta
+            clockwise *= 1;
+
+            double fr = forward + clockwise - right;  //+ change +/- right to change strafing direction
+            double br = forward + clockwise + right;  //-
+            double fl = forward - clockwise + right;  //-
+            double bl = forward - clockwise - right;  //+
+
+            fl = Range.scale(fl, -1, 1, -maxPower, maxPower);
+            fr = Range.scale(fr, -1, 1, -maxPower, maxPower);
+            bl = Range.scale(bl, -1, 1, -maxPower, maxPower);
+            br = Range.scale(br, -1, 1, -maxPower, maxPower);
+            robot.robotMotors.setMotorPower(fl, fr, bl, br);
 //
 //
 //            // BUTTONS ================================================== GAMER MOMENTS 2020
@@ -124,143 +130,143 @@ public class GluonsTeleOp2 extends LinearOpMode {
             //Gamepad 1
 
             //Drop Controls
-            if(gamepad2.left_trigger>0.8)
-            {
-                if(!clawPressed)
-                {
-                    clawPressed=true;
-                    if (!dropped) {
-                        robot.s.bOpen();
-                        dropped = true;
-                    } else {
-                        robot.s.bClose();
-                        dropped = false;
-                    }
-                }
+//            if(gamepad2.left_trigger>0.8)
+//            {
+//                if(!clawPressed)
+//                {
+//                    clawPressed=true;
+//                    if (!dropped) {
+//                        robot.s.bOpen();
+//                        dropped = true;
+//                    } else {
+//                        robot.s.bClose();
+//                        dropped = false;
+//                    }
+//                }
                 //dropButtonCD=2000;
-            }
-            else
-            {
-                clawPressed=false;
-            }
+//            }
+//            else
+//            {
+//                clawPressed=false;
+//            }
+////
+//            robot.s.setBoxPosition(robot.lift);
+//            if (!dropped) {
+//                robot.s.bClose();
+//            } else {
+//                robot.s.bOpen();
+//            }
+//            telemetry.addData("boxPosition", robot.s.getBoxPosition());
+//            telemetry.addData("dropped", dropped);
+//            telemetry.addData("boxOpen", robot.s.boxOpen);
+//            telemetry.addData("boxClose", robot.s.boxClose);
 //
-            robot.s.setBoxPosition(robot.lift);
-            if (!dropped) {
-                robot.s.bClose();
-            } else {
-                robot.s.bOpen();
-            }
-            telemetry.addData("boxPosition", robot.s.getBoxPosition());
-            telemetry.addData("dropped", dropped);
-            telemetry.addData("boxOpen", robot.s.boxOpen);
-            telemetry.addData("boxClose", robot.s.boxClose);
+//
+//            if (gamepad2.left_bumper)
+//            {
+//                robot.s.boxOpen+=0.01;
+//                robot.s.boxClose+=0.01;
+//
+//            }
+//            else if (gamepad2.right_bumper) {
+//                robot.s.boxOpen-=0.01;
+//                robot.s.boxClose-=0.01;
+//            }
 
-
-            if (gamepad2.left_bumper)
-            {
-                robot.s.boxOpen+=0.01;
-                robot.s.boxClose+=0.01;
-
-            }
-            else if (gamepad2.right_bumper) {
-                robot.s.boxOpen-=0.01;
-                robot.s.boxClose-=0.01;
-            }
-
-            if(gamepad1.y)
-                robot.intake.maxPower+=0.05;
-            if (gamepad1.a)
-                robot.intake.maxPower-=0.05;
-telemetry.addData("mp", robot.intake.maxPower);
+//            if(gamepad1.y)
+//                robot.intake.maxPower+=0.05;
+//            if (gamepad1.a)
+//                robot.intake.maxPower-=0.05;
+//telemetry.addData("mp", robot.intake.maxPower);
 
 //
 //            // Gamepad 2 - Functions GAMER MOMENTS 2020
 //
 
-            //Lift Control
-            if(gamepad2.a)
-            {
-                liftState="TO_LOWER";
-            }
-            if(gamepad2.x)
-            {
-                liftState="TO_MID";
-            }
-            if(gamepad2.y)
-            {
-                liftState="TO_UPPER";
-            }
-            if(gamepad2.b)
-            {
-                liftState="TO_BASE";
-            }
-            if(gamepad2.right_trigger>0.8)
-            {
-                liftState="TO_ABOVEZERO";
-            }
+//            //Lift Control
+//            if(gamepad2.a)
+//            {
+//                liftState="TO_LOWER";
+//            }
+//            if(gamepad2.x)
+//            {
+//                liftState="TO_MID";
+//            }
+//            if(gamepad2.y)
+//            {
+//                liftState="TO_UPPER";
+//            }
+//            if(gamepad2.b)
+//            {
+//                liftState="TO_BASE";
+//            }
+//            if(gamepad2.right_trigger>0.8)
+//            {
+//                liftState="TO_ABOVEZERO";
+//            }
+//
+//            if(gamepad2.dpad_up)
+//            {
+//                liftState="MANUAL";
+//                robot.lift.moveUpWithoutEncoders();
+//            }
+//            else if(gamepad2.dpad_down)
+//            {
+//                liftState="MANUAL";
+//                robot.lift.moveDownWithoutEncoders();
+//            }
+//            else if (gamepad1.b)
+//            {
+//                liftState="MANUAL";
+//                robot.lift.liftMotor.setPower(0);
+//            }
+//            else if(liftState.equals("MANUAL")) {
+//                robot.lift.liftMotor.setPower(0);
+//            }
+//
+//            if(gamepad2.dpad_right) {
+//                robot.lift.reset();
+//            }
+//            telemetry.addData("liftState: ", liftState);
+//            //states: TO_LOWER, TO_MID, TO_UPPER, TO_BASE, MANUAL
+//            if (liftState.equals("TO_LOWER"))
+//            {
+//                robot.lift.liftLowerLevel();
+//            }
+//            else if(liftState.equals("TO_ABOVEZERO"))
+//            {
+//                robot.lift.aboveZero();
+//            }
+//            else if (liftState.equals("TO_MID"))
+//            {
+//                robot.lift.liftMidLevel();
+//            }
+//            else if (liftState.equals("TO_UPPER"))
+//            {
+//                robot.lift.liftUpperLevel();
+//            }
+//            else if (liftState.equals("TO_BASE"))
+//            {
+//                robot.lift.backToBase();
+//            }
+//
+//            if (robot.lift.stopWhenReached())
+//            {
+//                liftState="MANUAL";
+//            }
 
-            if(gamepad2.dpad_up)
-            {
-                liftState="MANUAL";
-                robot.lift.moveUpWithoutEncoders();
-            }
-            else if(gamepad2.dpad_down)
-            {
-                liftState="MANUAL";
-                robot.lift.moveDownWithoutEncoders();
-            }
-            else if (gamepad1.b)
-            {
-                liftState="MANUAL";
-                robot.lift.liftMotor.setPower(0);
-            }
-            else if(liftState.equals("MANUAL")) {
-                robot.lift.liftMotor.setPower(0);
-            }
-
-            if(gamepad2.dpad_right) {
-                robot.lift.reset();
-            }
-            telemetry.addData("liftState: ", liftState);
-            //states: TO_LOWER, TO_MID, TO_UPPER, TO_BASE, MANUAL
-            if (liftState.equals("TO_LOWER"))
-            {
-                robot.lift.liftLowerLevel();
-            }
-            else if(liftState.equals("TO_ABOVEZERO"))
-            {
-                robot.lift.aboveZero();
-            }
-            else if (liftState.equals("TO_MID"))
-            {
-                robot.lift.liftMidLevel();
-            }
-            else if (liftState.equals("TO_UPPER"))
-            {
-                robot.lift.liftUpperLevel();
-            }
-            else if (liftState.equals("TO_BASE"))
-            {
-                robot.lift.backToBase();
-            }
-
-            if (robot.lift.stopWhenReached())
-            {
-                liftState="MANUAL";
-            }
 
 
-
-            //Intake Control
-            if(gamepad1.left_trigger>0.8) {
-                robot.intake.intake();
-            }
-            else if(gamepad1.right_trigger>0.8) {
-                robot.intake.reverseIntake();
-            }
-            else {
-                robot.intake.noIntake();
-            }
+//            //Intake Control
+//            if(gamepad1.left_trigger>0.8) {
+//                robot.intake.intake();
+//            }
+//            else if(gamepad1.right_trigger>0.8) {
+//                robot.intake.reverseIntake();
+//            }
+//            else {
+//                robot.intake.noIntake();
+//            }
 
 //            //Carousel Control
 //            if(gamepad2.left_bumper) {
@@ -274,31 +280,31 @@ telemetry.addData("mp", robot.intake.maxPower);
 //            }
 
 
-            //Computer vision
-            if (robot.tfod != null) {
-                // getUpdatedRecognitions() will return null if no new information is available since
-                // the last time that call was made.
-                List<Recognition> updatedRecognitions = robot.tfod.getUpdatedRecognitions();
-                if (updatedRecognitions != null) {
-                    telemetry.addData("# Object Detected", updatedRecognitions.size());
-                    // step through the list of recognitions and display boundary info.
-                    int i = 0;
-                    for (Recognition recognition : updatedRecognitions) {
-                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                                recognition.getLeft(), recognition.getTop());
-                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                                recognition.getRight(), recognition.getBottom());
-                        i++;
-                    }
-                }
-            }
+//            //Computer vision
+//            if (robot.tfod != null) {
+//                // getUpdatedRecognitions() will return null if no new information is available since
+//                // the last time that call was made.
+//                List<Recognition> updatedRecognitions = robot.tfod.getUpdatedRecognitions();
+//                if (updatedRecognitions != null) {
+//                    telemetry.addData("# Object Detected", updatedRecognitions.size());
+//                    // step through the list of recognitions and display boundary info.
+//                    int i = 0;
+//                    for (Recognition recognition : updatedRecognitions) {
+//                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+//                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+//                                recognition.getLeft(), recognition.getTop());
+//                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+//                                recognition.getRight(), recognition.getBottom());
+//                        i++;
+//                    }
+//                }
+//            }
 
             // TELEMETRY STATEMENTS
 
-            telemetry.addData("Gyro Heading", robot.imu.getHeadingDegrees());
-            telemetry.addData("Lift Value",robot.lift.liftMotor.getCurrentPosition());
-            telemetry.addData("Target Value",robot.lift.liftMotor.getTargetPosition());
+//            telemetry.addData("Gyro Heading", robot.imu.getHeadingDegrees());
+//            telemetry.addData("Lift Value",robot.lift.liftMotor.getCurrentPosition());
+//            telemetry.addData("Target Value",robot.lift.liftMotor.getTargetPosition());
 //            telemetry.addData("fl", robot.robotMotors.frontLeft.getCurrentPosition());
 //            telemetry.addData("fr", robot.robotMotors.frontRight.getCurrentPosition());
 //            telemetry.addData("bl", robot.robotMotors.backLeft.getCurrentPosition());

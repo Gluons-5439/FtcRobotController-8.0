@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode.Hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import java.util.ArrayList;
 
@@ -189,7 +190,7 @@ public class RobotMotors {
         else if (dir == 'l') {
             setMotorPower(-1, 1, -1, 1);
         }
-        Thread.sleep((int)(465 * degree / 90));
+        Thread.sleep((int)(440 * degree / 90));
         setMotorPower(0);
     }
 

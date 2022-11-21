@@ -116,7 +116,7 @@ public class WarehouseBlueAuto extends LinearOpMode{
         telemetry.addData("Level: ", result);
         telemetry.update();
 
-//Thread.sleep(15000);
+
 
         if (result == 't' || failsafe)
         {
@@ -124,11 +124,11 @@ public class WarehouseBlueAuto extends LinearOpMode{
             Thread.sleep(1000);
             robot.robotMotors.strafe(900,'r');
             Thread.sleep(1000);
-            robot.robotMotors.moveForward(810,0.5);
+            robot.robotMotors.moveForward(1040,0.5);
             Thread.sleep(2000);
             robot.s.open();
             Thread.sleep(1000);
-            robot.robotMotors.moveForward(410,-0.5);
+            robot.robotMotors.moveForward(350,-0.5);
             Thread.sleep(1000);
         }
         else if (result == 'm')
@@ -137,11 +137,11 @@ public class WarehouseBlueAuto extends LinearOpMode{
             Thread.sleep(1000);
             robot.robotMotors.strafe(900,'r');
             Thread.sleep(1000);
-            robot.robotMotors.moveForward(830,0.5);
+            robot.robotMotors.moveForward(1000,0.5);
             Thread.sleep(1000);
             robot.s.open();
             Thread.sleep(1000);
-            robot.robotMotors.moveForward(380,-0.5);
+            robot.robotMotors.moveForward(250,-0.5);
             Thread.sleep(1000);
         }
         else {
@@ -149,11 +149,11 @@ public class WarehouseBlueAuto extends LinearOpMode{
             Thread.sleep(1000);
             robot.robotMotors.strafe(900,'r');
             Thread.sleep(1000);
-            robot.robotMotors.moveForward(800,0.5);
+            robot.robotMotors.moveForward(900,0.5);
             Thread.sleep(1000);
             robot.s.open();
             Thread.sleep(1000);
-            robot.robotMotors.moveForward(300,-0.5);
+            robot.robotMotors.moveForward(150,-0.5);
             Thread.sleep(1000);
         }
 
@@ -165,11 +165,11 @@ public class WarehouseBlueAuto extends LinearOpMode{
 //        robot.robotMotors.strafe(200,'r');
 
         //parking in warehouse
-        robot.robotMotors.turn(90,'l'); //74 l
+        robot.robotMotors.turn(74,'l'); //74 l
         Thread.sleep(1000);
-        robot.robotMotors.moveForward(1950, 0.7);
-        Thread.sleep(1000);
-        robot.lift.liftMidLevel();
+        robot.robotMotors.moveForward(2200, 0.7);
+        robot.lift.backToBase();
+        robot.lift.liftLowerLevel();
 
         executor.schedule(new Runnable() {
             @Override

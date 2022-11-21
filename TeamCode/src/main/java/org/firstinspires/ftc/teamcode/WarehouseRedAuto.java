@@ -123,11 +123,11 @@ public class WarehouseRedAuto extends LinearOpMode{
         Thread.sleep(1000);
         robot.robotMotors.strafe(900,'l');
         Thread.sleep(1000);
-        robot.robotMotors.moveForward(860,0.5);
-        Thread.sleep(2000);
+        robot.robotMotors.moveForward(940,0.5);
+        Thread.sleep(4000);
         robot.s.open();
         Thread.sleep(1000);
-        robot.robotMotors.moveForward(740,-0.5);
+        robot.robotMotors.moveForward(550,-0.5);
             Thread.sleep(1000);
         }
         else if (result == 'm')
@@ -136,11 +136,11 @@ public class WarehouseRedAuto extends LinearOpMode{
             Thread.sleep(1000);
             robot.robotMotors.strafe(900,'l');
             Thread.sleep(1000);
-            robot.robotMotors.moveForward(820,0.5);
+            robot.robotMotors.moveForward(900,0.5);
             Thread.sleep(1000);
             robot.s.open();
             Thread.sleep(1000);
-            robot.robotMotors.moveForward(640,-0.5);
+            robot.robotMotors.moveForward(450,-0.5);
             Thread.sleep(1000);
         }
         else {
@@ -148,11 +148,11 @@ public class WarehouseRedAuto extends LinearOpMode{
             Thread.sleep(1000);
             robot.robotMotors.strafe(900,'l');
             Thread.sleep(1000);
-            robot.robotMotors.moveForward(925,0.5);
+            robot.robotMotors.moveForward(800,0.5);
             Thread.sleep(1000);
             robot.s.open();
             Thread.sleep(1000);
-            robot.robotMotors.moveForward(765,-0.5);
+            robot.robotMotors.moveForward(350,-0.5);
             Thread.sleep(1000);
         }
 //        robot.lift.backToBase();
@@ -164,12 +164,11 @@ public class WarehouseRedAuto extends LinearOpMode{
 
 
         //parking in warehouse
-        robot.robotMotors.turn(95,'r'); //76 r before
+        robot.robotMotors.turn(270,'l'); //76 r before
         Thread.sleep(1000);
-        robot.robotMotors.moveForward(1500, 0.7);
-        Thread.sleep(1000);
-        robot.lift.liftMidLevel();
-        Thread.sleep(1000);
+        robot.robotMotors.moveForward(2200, 0.7);
+        robot.lift.backToBase();
+        robot.lift.liftLowerLevel();
 
 
 

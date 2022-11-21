@@ -34,12 +34,14 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -47,15 +49,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.Autonomous.DriveTrainVel;
-import org.firstinspires.ftc.teamcode.Hardware.CarouselTurn;
 import org.firstinspires.ftc.teamcode.Hardware.Flywheel;
 import org.firstinspires.ftc.teamcode.Hardware.IMU;
-import org.firstinspires.ftc.teamcode.Hardware.Intake;
-import org.firstinspires.ftc.teamcode.Hardware.Lift;
 import org.firstinspires.ftc.teamcode.Hardware.RobotMotors;
 import org.firstinspires.ftc.teamcode.Hardware.Sensors;
 import org.firstinspires.ftc.teamcode.Hardware.Servos;
+import org.firstinspires.ftc.teamcode.Hardware.WheelStick;
 import org.firstinspires.ftc.teamcode.Hardware.WobbleGoal;
+import org.firstinspires.ftc.teamcode.Hardware.CarouselTurn;
+import org.firstinspires.ftc.teamcode.Hardware.Intake;
+import org.firstinspires.ftc.teamcode.Hardware.Lift;
 
 
 
@@ -75,14 +78,13 @@ public class Robot {
     public Intake intake;
 
     public VuforiaLocalizer vuforia;
-    private static final String VUFORIA_KEY = "AfmBbcz/////AAAAGbLGg++zzk4MiOrcPTc3t9xQj3QHfISJprebOgt5JJ4+83xtFO+ApGlI3GVY/aMgCpoGEIzaJse9sXiYDiLYpJQlGDX765tWJUrqM+pzqLxVXjWA1J6c968/YqYq74Vq5emNxGHj5SF3HP3m43Iq/YYgkSdMv4BR+RThPPnIIzrbAjEAHHtMgH7vVh036+bcw9UqBfSdD/IBqrKpJLERn5+Qi/4Q4EoReCC0CTDfZ+LcY0rUur0QZRkMpxx/9s4eCgIU+qfOcSlBvjoX7QAQ2MImUME1y5yJiyaWueamnhRBOwERGBuDKyGp4eBWp4i3esJcplrWYovjzPg9fL7Thy8v9KnrHy22PUFAYY+1vjKp";
+    private static final String VUFORIA_KEY = "AYq2RFz/////AAABmRJ9Vcm3rkvJqkrRE3o8IB5XeFVhPFo4DT4zu5Tyof7rPfmYmoMLxEaKeYC9RD3doAGHlLUld1UjncCWOSTSxH9rhsG0QSVHQ7LGLkI/I8rUuWTTzbhNlUCRRVbH4JGQYqlcOhf32bGrGUvdcOumwoqdtbqLvQGlFLgPvetZOZ/hKBdUribDLHxejB1Dt2AKu2cfIhYLeATg7y2J7G718Hs8cMAfv3KB2q0MgZcdHmjF0imGT4DGm72ON37ZeXH+8Xri1ah5mTRR6FtNJ5vGxDKJf8PsyS8gtjblVVV+Nh+f8V/vqGpkZIvwLhwrBs6LRy5rz/q78C/lCDg4efNUuCV/px8wpg3wU7HPZhGNFm0q";
     public TFObjectDetector tfod;
-    private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
-    private static final String[] LABELS = {
-            "Ball",
-            "Cube",
-            "Duck",
-            "Marker"
+    private static final String TFOD_MODEL_ASSET = "PowerPlay.tflite";
+    final String[] LABELS = {
+            "1 Bolt",
+            "2 Bulb",
+            "3 Panel"
     };
     BNO055IMU gyro;
     public Orientation angles;
@@ -112,15 +114,15 @@ public class Robot {
         DcMotor backLeft = hardwareMap.dcMotor.get("backLeft");
         DcMotor frontRight = hardwareMap.dcMotor.get("frontRight");
         DcMotor backRight = hardwareMap.dcMotor.get("backRight");
-        DcMotor turnMotor = hardwareMap.dcMotor.get("turnMotor");
+//        DcMotor turnMotor = hardwareMap.dcMotor.get("turnMotor");
 //        DcMotor inMotor = hardwareMap.dcMotor.get("inMotor");
-        DcMotor liftMotor = hardwareMap.dcMotor.get("liftMotor");
+//        DcMotor liftMotor = hardwareMap.dcMotor.get("liftMotor");
 
-        Servo drop = hardwareMap.servo.get("drop");
+//        Servo drop = hardwareMap.servo.get("drop");
 //        Servo boxDrop=hardwareMap.servo.get("boxDrop");
 
-        gyro = hardwareMap.get(BNO055IMU.class, "imu");
-        angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        // gyro = hardwareMap.get(BNO055IMU.class, "imu");
+//        angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS)
 
 // MUST FIX        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
 // MUST FIX        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -128,6 +130,7 @@ public class Robot {
 //      Initialize Vuforia engine
 
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
         this.vuforia = ClassFactory.getInstance().createVuforia(parameters);
 //        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
@@ -142,24 +145,24 @@ public class Robot {
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
 
-
-        BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
-        imuParameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-        imuParameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        imuParameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        imuParameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-        gyro.initialize(imuParameters);
-
-        imu = new IMU(gyro);
+//
+//        BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
+//        imuParameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+//        imuParameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+//        imuParameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+//        imuParameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+//        gyro.initialize(imuParameters);
+//
+//        imu = new IMU(gyro);
 
 
 //        s = new Servos(flap, kick, latch, buffer);
-        s = new Servos(drop);
+//        s = new Servos(drop);
         driveTrain = new DriveTrainVel(frontLeft, frontRight, backLeft, backRight);
         robotMotors = new RobotMotors(frontLeft, frontRight, backLeft, backRight);
-        carouselTurn = new CarouselTurn(turnMotor);
+//        carouselTurn = new CarouselTurn(turnMotor);
 //        intake = new Intake(inMotor);
-        lift = new Lift(liftMotor);
+//        lift = new Lift(liftMotor);
     }
 
     public void waitForTick(long periodMs) throws InterruptedException {

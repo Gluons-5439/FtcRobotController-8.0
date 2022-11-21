@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class CarouselTurn {
     public DcMotor turnMotor;
@@ -16,7 +17,7 @@ public class CarouselTurn {
         turnMotor=t;
     }
 
-    private final int FULL_ROTATION=3000; //time for the carousel to spin once completely. subject to change.
+    private final int FULL_ROTATION=1000; //time for the carousel to spin once completely. subject to change.
 //    public static double redPower=-0.4;
 //    public static double bluePower=0.8;
 
@@ -38,14 +39,14 @@ public class CarouselTurn {
 
     public void runBlueOnce() throws InterruptedException
     {
-        turnMotor.setPower(maxPower-0.1);
+        startBlueTurn();
         Thread.sleep(FULL_ROTATION);
         stopTurn();
     }
 
     public void runRedOnce() throws InterruptedException
     {
-        turnMotor.setPower(-maxPower+0.1);
+        startRedTurn();
         Thread.sleep(FULL_ROTATION);
         stopTurn();
     }
