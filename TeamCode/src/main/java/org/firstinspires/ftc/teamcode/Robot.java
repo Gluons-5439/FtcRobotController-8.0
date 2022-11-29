@@ -80,7 +80,8 @@ public class Robot {
     public VuforiaLocalizer vuforia;
     private static final String VUFORIA_KEY = "AYq2RFz/////AAABmRJ9Vcm3rkvJqkrRE3o8IB5XeFVhPFo4DT4zu5Tyof7rPfmYmoMLxEaKeYC9RD3doAGHlLUld1UjncCWOSTSxH9rhsG0QSVHQ7LGLkI/I8rUuWTTzbhNlUCRRVbH4JGQYqlcOhf32bGrGUvdcOumwoqdtbqLvQGlFLgPvetZOZ/hKBdUribDLHxejB1Dt2AKu2cfIhYLeATg7y2J7G718Hs8cMAfv3KB2q0MgZcdHmjF0imGT4DGm72ON37ZeXH+8Xri1ah5mTRR6FtNJ5vGxDKJf8PsyS8gtjblVVV+Nh+f8V/vqGpkZIvwLhwrBs6LRy5rz/q78C/lCDg4efNUuCV/px8wpg3wU7HPZhGNFm0q";
     public TFObjectDetector tfod;
-    private static final String TFOD_MODEL_ASSET = "PowerPlay.tflite";
+    private static final String DEFAULT_TFOD_MODEL_ASSET = "PowerPlay.tflite";
+    private static final String TFOD_MODEL_ASSET = "RGBSignalSleeve.tflite";
     final String[] LABELS = {
             "1 Bolt",
             "2 Bulb",
@@ -143,6 +144,7 @@ public class Robot {
         tfodParameters.isModelTensorFlow2 = true;
         tfodParameters.inputSize = 320;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+        tfod.loadModelFromAsset(DEFAULT_TFOD_MODEL_ASSET, LABELS);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
 
 //

@@ -18,7 +18,10 @@ public class RedSideAuto extends LinearOpMode{
         final String[] LABELS = {
                 "1 Bolt",
                 "2 Bulb",
-                "3 Panel"
+                "3 Panel",
+                "Blue",
+                "Green",
+                "Red"
         };
         robot.init(hardwareMap);
 
@@ -76,9 +79,9 @@ public class RedSideAuto extends LinearOpMode{
                 }
             }
         }
-        if(label.equals(LABELS[0]))
+        if(label.equals(LABELS[0]) || label.equals(LABELS[5]))
             robot.robotMotors.strafe(800,'l');
-        else if(label.equals(LABELS[2]))
+        else if(label.equals(LABELS[2]) || label.equals(LABELS[3]))
             robot.robotMotors.strafe(800,'r');
         Thread.sleep(500);
         robot.robotMotors.moveForward(1000,0.8);
