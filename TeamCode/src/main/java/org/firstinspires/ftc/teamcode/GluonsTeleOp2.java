@@ -63,7 +63,8 @@ public class GluonsTeleOp2 extends LinearOpMode {
         boolean dropped = false;
         boolean clawPressed=false;
 
-        String liftState="MANUAL";
+
+        String liftState="STOP";
 
 //        robot.robotMotors.turnOffEncoders();
 
@@ -117,7 +118,7 @@ public class GluonsTeleOp2 extends LinearOpMode {
             //Gamepad 1
 
             //Claw Controls
-            if(gamepad2.left_trigger>0.8)
+            if(gamepad1.x)
             {
                 if(!clawPressed)
                 {
@@ -143,7 +144,7 @@ public class GluonsTeleOp2 extends LinearOpMode {
             } else {
                 robot.s.open();
             }
-//            telemetry.addData("dropped", dropped);
+            telemetry.addData("dropped", dropped);
 //            telemetry.addData("boxOpen", robot.s.open);
 //            telemetry.addData("boxClose", robot.s.close);
 
@@ -169,27 +170,28 @@ public class GluonsTeleOp2 extends LinearOpMode {
             // Gamepad 2 - Functions GAMER MOMENTS 2020
 
 
-            //Lift Control
-            if(gamepad2.a)
-            {
-                liftState="TO_LOWER";
-            }
-            if(gamepad2.x)
-            {
-                liftState="TO_MID";
-            }
-            if(gamepad2.y)
-            {
-                liftState="TO_UPPER";
-            }
-            if(gamepad2.b)
-            {
-                liftState="TO_BASE";
-            }
-            if(gamepad2.right_trigger>0.8)
-            {
-                liftState="TO_ABOVEZERO";
-            }
+//            //Lift Control
+//            if(gamepad2.a)
+//            {
+//                liftState="TO_LOWER";
+//            }
+//            if(gamepad2.x)
+//            {
+//                liftState="TO_MID";
+//            }
+//            if(gamepad2.y)
+//            {
+//                liftState="TO_UPPER";
+//            }
+//            if(gamepad2.b)
+//            {
+//                liftState="TO_BASE";
+//            }
+//            if(gamepad2.right_trigger>0.8)
+//            {
+//                liftState="TO_ABOVEZERO";
+//            }
+
 
             if(gamepad2.dpad_up)
             {
@@ -210,7 +212,7 @@ public class GluonsTeleOp2 extends LinearOpMode {
                 robot.lift.liftMotor.setPower(0);
             }
 
-            if(gamepad2.dpad_right) {
+            if(gamepad1.dpad_right) {
                 robot.lift.reset();
             }
             telemetry.addData("liftState: ", liftState);
@@ -235,7 +237,6 @@ public class GluonsTeleOp2 extends LinearOpMode {
             {
                 robot.lift.backToBase();
             }
-
             if (robot.lift.stopWhenReached())
             {
                 liftState="MANUAL";

@@ -61,12 +61,12 @@ public class Lift {
 
     public void moveUpWithoutEncoders() {
         liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        liftMotor.setPower(0.4);
+        liftMotor.setPower(maxPower);
     }
 
     public void moveDownWithoutEncoders() {
         liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        liftMotor.setPower(-0.4);
+        liftMotor.setPower(-maxPower);
     }
 
     public void reset() {

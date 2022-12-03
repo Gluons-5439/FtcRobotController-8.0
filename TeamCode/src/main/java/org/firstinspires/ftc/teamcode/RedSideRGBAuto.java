@@ -9,26 +9,25 @@ import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name="RedSideAuto",group="Autonomous")
-public class RedSideAuto extends LinearOpMode{
+@Autonomous(name="RedSideRGBAuto",group="Autonomous")
+public class RedSideRGBAuto extends LinearOpMode{
     private Robot robot=new Robot();
 
     public void runOpMode() throws InterruptedException {
 
         final String[] LABELS = {
-                "1 Bolt",
-                "2 Bulb",
-                "3 Panel"
+               "Blue",
+                "Green",
+                "Red"
         };
         robot.init(hardwareMap);
-        robot.tfod.loadModelFromAsset("PowerPlay.tflite", LABELS);
+        robot.tfod.loadModelFromAsset("RGBSignalSleeve.tflite", LABELS);
 
         robot.tfod.activate();
         robot.tfod.setZoom(1, 16.0/9.0);
 
         boolean found=false;
         boolean failsafe=false;
-
 
         waitForStart();
 
@@ -85,9 +84,9 @@ public class RedSideAuto extends LinearOpMode{
                 break;
             }
         }
-        if(label.equals(LABELS[0]))
+        if(label.equals(LABELS[2]))
             robot.robotMotors.strafe(800,'l');
-        else if(label.equals(LABELS[2]))
+        else if(label.equals(LABELS[0]))
             robot.robotMotors.strafe(800,'r');
         Thread.sleep(500);
         robot.robotMotors.moveForward(1000,0.8);

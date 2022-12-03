@@ -18,17 +18,16 @@ public class BlueSideAuto extends LinearOpMode{
         final String[] LABELS = {
                 "1 Bolt",
                 "2 Bulb",
-                "3 Panel",
-                "Blue",
-                "Green",
-                "Red"
+                "3 Panel"
         };
         robot.init(hardwareMap);
+        robot.tfod.loadModelFromAsset("PowerPlay.tflite", LABELS);
 
         robot.tfod.activate();
         robot.tfod.setZoom(1, 16.0/9.0);
 
         boolean found=false;
+        boolean failsafe=false;
 
 
         waitForStart();
@@ -50,6 +49,7 @@ public class BlueSideAuto extends LinearOpMode{
         int minDetections=1; //minimum number of "frames" the robot detects the element for to ensure it is detected properly
         int detections=0;
         String label="";
+        long startTime=System.currentTimeMillis();
         while (!found) {
             telemetry.addData("found=", found);
             if (robot.tfod != null) {
@@ -78,10 +78,16 @@ public class BlueSideAuto extends LinearOpMode{
                     }
                 }
             }
+            long elapsedTime=System.currentTimeMillis();
+            long num=elapsedTime-startTime;
+            if(num>2000) {
+                failsafe=true;
+                break;
+            }
         }
-        if(label.equals(LABELS[0]) || label.equals(LABELS[5]))
+        if(label.equals(LABELS[0]))
             robot.robotMotors.strafe(800,'l');
-        else if(label.equals(LABELS[2]) || label.equals(LABELS[3]))
+        else if(label.equals(LABELS[2]))
             robot.robotMotors.strafe(800,'r');
         Thread.sleep(500);
         robot.robotMotors.moveForward(1000,0.8);
