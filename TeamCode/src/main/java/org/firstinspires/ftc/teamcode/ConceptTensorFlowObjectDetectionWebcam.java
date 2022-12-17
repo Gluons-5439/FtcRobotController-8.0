@@ -62,17 +62,17 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
      */
 
     private static final String DEFAULT_TFOD_MODEL_ASSET = "PowerPlay.tflite";
-    private static final String TFOD_MODEL_ASSET = "RGBSignalSleeve.tflite";
+    private static final String TFOD_MODEL_ASSET = "CMYSignalSleeve.tflite";
     // private static final String TFOD_MODEL_FILE  = "/sdcard/FIRST/tflitemodels/CustomTeamModel.tflite";
 
 
     private static final String[] LABELS = {
-            "1 Bolt",
-            "2 Bulb",
-            "3 Panel",
-            "Blue",
-            "Green",
-            "Red"
+//            "1 Bolt",
+//            "2 Bulb",
+//            "3 Panel",
+            "Cyan",
+            "Magenta",
+            "Yellow"
     };
 
     /*

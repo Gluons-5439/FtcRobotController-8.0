@@ -70,7 +70,7 @@ public class Robot {
     public Sensors c;
     public IMU imu;
     public RobotMotors robotMotors;
-//    public WheelStick wheelStick;
+    //    public WheelStick wheelStick;
     public Flywheel flywheel;
     public WobbleGoal wobbleGoal;
     public CarouselTurn carouselTurn;
@@ -117,9 +117,9 @@ public class Robot {
         DcMotor backRight = hardwareMap.dcMotor.get("backRight");
 //        DcMotor turnMotor = hardwareMap.dcMotor.get("turnMotor");
 //        DcMotor inMotor = hardwareMap.dcMotor.get("inMotor");
-//        DcMotor liftMotor = hardwareMap.dcMotor.get("liftMotor");
+        DcMotor liftMotor = hardwareMap.dcMotor.get("liftMotor");
 
-//        Servo drop = hardwareMap.servo.get("drop");
+        Servo claw = hardwareMap.servo.get("claw");
 //        Servo boxDrop=hardwareMap.servo.get("boxDrop");
 
         // gyro = hardwareMap.get(BNO055IMU.class, "imu");
@@ -144,8 +144,7 @@ public class Robot {
         tfodParameters.isModelTensorFlow2 = true;
         tfodParameters.inputSize = 320;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-        tfod.loadModelFromAsset(DEFAULT_TFOD_MODEL_ASSET, LABELS);
-        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
+//        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
 
 //
 //        BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
@@ -159,12 +158,12 @@ public class Robot {
 
 
 //        s = new Servos(flap, kick, latch, buffer);
-//        s = new Servos(drop);
+        s = new Servos(claw);
         driveTrain = new DriveTrainVel(frontLeft, frontRight, backLeft, backRight);
         robotMotors = new RobotMotors(frontLeft, frontRight, backLeft, backRight);
 //        carouselTurn = new CarouselTurn(turnMotor);
 //        intake = new Intake(inMotor);
-//        lift = new Lift(liftMotor);
+        lift = new Lift(liftMotor);
     }
 
     public void waitForTick(long periodMs) throws InterruptedException {

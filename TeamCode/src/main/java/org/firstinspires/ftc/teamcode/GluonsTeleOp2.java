@@ -192,26 +192,41 @@ public class GluonsTeleOp2 extends LinearOpMode {
 //                liftState="TO_ABOVEZERO";
 //            }
 
+            //2 Driver Lift Control
+//            if(gamepad2.dpad_up)
+//            {
+//                liftState="MANUAL";
+//                robot.lift.moveUpWithoutEncoders();
+//            }
+//            else if(gamepad2.dpad_down)
+//            {
+//                liftState="MANUAL";
+//                robot.lift.moveDownWithoutEncoders();
+//            }
+//            else if (gamepad1.b)
+//            {
+//                liftState="MANUAL";
+//                robot.lift.liftMotor.setPower(0);
+//            }
+//            else if(liftState.equals("MANUAL")) {
+//                robot.lift.liftMotor.setPower(0);
+//            }
 
-            if(gamepad2.dpad_up)
+            //1 Driver Bumper Lift Control
+            if(gamepad1.right_trigger>0.7)
             {
                 liftState="MANUAL";
                 robot.lift.moveUpWithoutEncoders();
             }
-            else if(gamepad2.dpad_down)
+            else if(gamepad1.left_trigger>0.7)
             {
                 liftState="MANUAL";
                 robot.lift.moveDownWithoutEncoders();
             }
-            else if (gamepad1.b)
+            else if(liftState.equals("MANUAL"))
             {
-                liftState="MANUAL";
                 robot.lift.liftMotor.setPower(0);
             }
-            else if(liftState.equals("MANUAL")) {
-                robot.lift.liftMotor.setPower(0);
-            }
-
             if(gamepad1.dpad_right) {
                 robot.lift.reset();
             }
