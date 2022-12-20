@@ -8,8 +8,8 @@ public class Servos {
 
     private Servo claw;
 
-    private final double CLAW_OPEN = 0.65; //numbers subject to change
-    private final double CLAW_CLOSE = .9; //numbers subject to change
+    private final double CLAW_OPEN = 0.68; //numbers subject to change
+    private final double CLAW_CLOSE = 1; //numbers subject to change
 
 
     public Servos(Servo c)
