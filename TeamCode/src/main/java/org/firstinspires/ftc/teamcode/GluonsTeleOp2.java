@@ -145,6 +145,8 @@ public class GluonsTeleOp2 extends LinearOpMode {
                 robot.s.open();
             }
             telemetry.addData("dropped", dropped);
+            telemetry.addData("clawPosition",robot.s.getClawPosition());
+            telemetry.addData("claw2Position",robot.s.getClaw2Position());
 //            telemetry.addData("boxOpen", robot.s.open);
 //            telemetry.addData("boxClose", robot.s.close);
 

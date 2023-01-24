@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name="RedSideCMYAuto",group="Autonomous")
+@Autonomous(name="RedAmbitiousAutoLeft",group="Autonomous")
 public class RedAmbitiousAutoLeft extends LinearOpMode{
     private Robot robot=new Robot();
 
@@ -94,7 +94,7 @@ public class RedAmbitiousAutoLeft extends LinearOpMode{
         }
         else if(label.equals(LABELS[1])) {
             Thread.sleep(500);
-            robot.robotMotors.moveForward(1000, 0.8);
+            robot.robotMotors.moveForward(1000, -0.8);
         }
         else if(label.equals(LABELS[2])) {
             robot.robotMotors.strafe(800, 'r');

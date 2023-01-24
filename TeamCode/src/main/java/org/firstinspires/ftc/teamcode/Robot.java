@@ -120,7 +120,7 @@ public class Robot {
         DcMotor liftMotor = hardwareMap.dcMotor.get("liftMotor");
 
         Servo claw = hardwareMap.servo.get("claw");
-//        Servo boxDrop=hardwareMap.servo.get("boxDrop");
+        Servo claw2=hardwareMap.servo.get("claw2");
 
         // gyro = hardwareMap.get(BNO055IMU.class, "imu");
 //        angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS)
@@ -158,7 +158,7 @@ public class Robot {
 
 
 //        s = new Servos(flap, kick, latch, buffer);
-        s = new Servos(claw);
+        s = new Servos(claw,claw2);
         driveTrain = new DriveTrainVel(frontLeft, frontRight, backLeft, backRight);
         robotMotors = new RobotMotors(frontLeft, frontRight, backLeft, backRight);
 //        carouselTurn = new CarouselTurn(turnMotor);
